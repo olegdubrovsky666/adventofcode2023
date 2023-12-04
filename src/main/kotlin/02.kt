@@ -1,9 +1,9 @@
 import java.io.File
 
-data class GameSet(val red: Int = 0, val green: Int = 0, val blue: Int = 0)
-data class Game(val id: Int, val sets: List<GameSet>)
+private data class GameSet(val red: Int = 0, val green: Int = 0, val blue: Int = 0)
+private data class Game(val id: Int, val sets: List<GameSet>)
 
-fun parseGame(input: String): Game {
+private fun parseGame(input: String): Game {
     val (title, conf) = input.split(":")
     val id = title.removePrefix("Game ").toInt()
 
@@ -28,7 +28,7 @@ fun parseGame(input: String): Game {
     return Game(id, sets)
 }
 
-fun part1(input: List<Game>): Int {
+private fun part1(input: List<Game>): Int {
     return input.filter { game ->
         game.sets.all { set ->
             val (red, green, blue) = set
@@ -38,7 +38,7 @@ fun part1(input: List<Game>): Int {
     }.sumOf { game -> game.id }
 }
 
-fun part2(input: List<Game>): Int {
+private fun part2(input: List<Game>): Int {
     return input.sumOf { game ->
         game.sets.maxOf { set -> set.red } * game.sets.maxOf { set -> set.green } * game.sets.maxOf { set -> set.blue }
     }

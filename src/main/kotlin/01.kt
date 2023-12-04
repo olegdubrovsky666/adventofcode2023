@@ -6,7 +6,7 @@ val digits = listOf("one", "two", "three", "four", "five", "six", "seven", "eigh
     .associateBy({ it.value }, { it.index + 1 })
 
 
-fun part1(input: List<String>): Int {
+private fun part1(input: List<String>): Int {
     return input.fold(0) { acc: Int, line: String ->
         var first = 0
         while (!line[first].isDigit()) {
@@ -23,7 +23,7 @@ fun part1(input: List<String>): Int {
 }
 
 
-fun part2(input: List<String>): Int {
+private fun part2(input: List<String>): Int {
     return input.fold(0) { acc: Int, line: String ->
         var lineCalibrationValue = 0
 
