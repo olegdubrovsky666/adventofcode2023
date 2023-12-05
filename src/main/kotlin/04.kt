@@ -7,8 +7,8 @@ private fun parseCard(str: String): Card {
     val (winningNumbers, playNumbers) = numbers.split("|")
 
     return Card(
-        winningNumbers = winningNumbers.trim().split("\\s+".toRegex()).map { it.toInt() },
-        playNumbers = playNumbers.trim().split("\\s+".toRegex()).map { it.toInt() }
+        winningNumbers = winningNumbers.split(" ").filter { it.isNotBlank() }.map { it.toInt() },
+        playNumbers = playNumbers.split(" ").filter { it.isNotBlank() }.map { it.toInt() }
     )
 }
 
