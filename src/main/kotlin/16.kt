@@ -1,6 +1,8 @@
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import shared.Position
 import java.io.File
-import kotlin.math.max
 
 private fun nextPosition(position: Position, direction: String): Position {
     return when (direction) {
@@ -67,7 +69,12 @@ private fun energizedCellsCount(start: Position, direction: String, input: List<
         cursors = cursors.filter { !seen.contains(it) }.onEach { seen.add(it) }.flatMap { (position, direction) ->
             val current = input[position.row][position.col]
 
-            nextDirections(current, direction).map { d -> nextPosition(position, d) to d }
+            nextDirections(current, direction).map { nextDirection ->
+                nextPosition(
+                    position,
+                    nextDirection
+                ) to nextDirection
+            }
         }.filter { (position, _) -> position.row in input.indices && position.col in input[position.row].indices }
     }
 
@@ -83,17 +90,19 @@ private fun part2(input: List<String>): Int {
     val rows = input.indices
     val cols = input[0].indices
 
-    var result = 0
-    for (row in rows) {
-        result = max(result, energizedCellsCount(Position(row, cols.first()), "right", input))
-        result = max(result, energizedCellsCount(Position(row, cols.last()), "left", input))
-    }
-    for (col in cols) {
-        result = max(result, energizedCellsCount(Position(rows.first(), col), "down", input))
-        result = max(result, energizedCellsCount(Position(rows.last(), col), "up", input))
+    val results = mutableListOf<Int>()
+    runBlocking(Dispatchers.Default) {
+        for (row in rows) {
+            launch { results += energizedCellsCount(Position(row, cols.first()), "right", input) }
+            launch { results += energizedCellsCount(Position(row, cols.last()), "left", input) }
+        }
+        for (col in cols) {
+            launch { results += energizedCellsCount(Position(rows.first(), col), "down", input) }
+            launch { results += energizedCellsCount(Position(rows.last(), col), "up", input) }
+        }
     }
 
-    return result
+    return results.max()
 }
 
 fun main() {
