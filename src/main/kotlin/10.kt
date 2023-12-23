@@ -1,6 +1,6 @@
+import shared.Position
 import java.io.File
 
-data class Position(val row: Int, val col: Int)
 
 private fun start(input: Array<CharArray>): Position {
     for (row in 0..<input.size) {

@@ -1,14 +1,14 @@
+import shared.Position
 import java.io.File
 
-data class Galaxy(val row: Int, val col: Int)
 
-private fun galaxies(input: List<String>): List<Galaxy> {
-    val galaxies = mutableListOf<Galaxy>()
+private fun galaxies(input: List<String>): List<Position> {
+    val galaxies = mutableListOf<Position>()
 
-    for (row in 0..<input.size) {
-        for (col in 0..<input[row].length) {
+    for (row in input.indices) {
+        for (col in input[row].indices) {
             if (input[row][col] == '#') {
-                galaxies.addLast(Galaxy(row, col))
+                galaxies.addLast(Position(row, col))
             }
         }
     }
@@ -16,7 +16,7 @@ private fun galaxies(input: List<String>): List<Galaxy> {
     return galaxies.toList()
 }
 
-private fun sumOfPathsBetweenGalaxies(galaxies: List<Galaxy>, scalingFactor: Int): Long {
+private fun sumOfPathsBetweenGalaxies(galaxies: List<Position>, scalingFactor: Int): Long {
     val rowsWithGalaxies = galaxies.groupBy { it.row }.keys
     val colsWIthGalaxies = galaxies.groupBy { it.col }.keys
 
@@ -44,8 +44,8 @@ private fun sumOfPathsBetweenGalaxies(galaxies: List<Galaxy>, scalingFactor: Int
     return result
 }
 
-private fun part1(galaxies: List<Galaxy>): Long = sumOfPathsBetweenGalaxies(galaxies, 2)
-private fun part2(galaxies: List<Galaxy>): Long = sumOfPathsBetweenGalaxies(galaxies, 1_000_000)
+private fun part1(galaxies: List<Position>): Long = sumOfPathsBetweenGalaxies(galaxies, 2)
+private fun part2(galaxies: List<Position>): Long = sumOfPathsBetweenGalaxies(galaxies, 1_000_000)
 
 fun main() {
     val input = File("src/main/resources/input/11.txt").readLines()
