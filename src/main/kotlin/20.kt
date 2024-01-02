@@ -2,7 +2,7 @@ import shared.math.lcm
 import java.io.File
 import java.util.*
 
-enum class Pulse { LOW, HIGH }
+private enum class Pulse { LOW, HIGH }
 private class Event(val pulse: Pulse, val from: String, val to: List<String>)
 
 
