@@ -42,7 +42,7 @@ private fun array3d(bricks: Map<Int, Brick>): Array<Array<Array<Int>>> {
     return arr
 }
 
-private fun shift(arr: Array<Array<Array<Int>>>, bricks: Map<Int, Brick>): Unit {
+private fun shift(arr: Array<Array<Array<Int>>>, bricks: Map<Int, Brick>) {
     do {
         var shifted = 0
         for ((i, brick) in bricks) {
